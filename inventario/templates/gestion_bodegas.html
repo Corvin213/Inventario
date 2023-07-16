@@ -1,0 +1,10 @@
+{% block content %}
+  <h2>Gestión de Bodegas</h2>
+  <ul>
+    {% for bodega in bodegas %}
+      <li>{{ bodega.nombre }}</li>
+    {% empty %}
+      <li>No hay bodegas</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

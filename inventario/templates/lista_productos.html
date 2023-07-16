@@ -1,0 +1,10 @@
+{% block content %}
+  <h2>Lista de Productos</h2>
+  <ul>
+    {% for producto in productos %}
+      <li>{{ producto.nombre }}</li>
+    {% empty %}
+      <li>No hay productos</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

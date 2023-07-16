@@ -1,0 +1,12 @@
+{% block content %}
+  <h2>Registrarse</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+      <label for="{{ form.rol.id_for_label }}">Rol</label>
+      {{ form.rol }}
+    </div>
+    <button type="submit">Registrarse</button>
+  </form>
+{% endblock %}

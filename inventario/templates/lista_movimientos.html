@@ -1,0 +1,10 @@
+{% block content %}
+  <h2>Lista de Movimientos</h2>
+  <ul>
+    {% for movimiento in movimientos %}
+      <li>{{ movimiento.fecha }} - {{ movimiento.bodega_origen.nombre }} -> {{ movimiento.bodega_destino.nombre }}</li>
+    {% empty %}
+      <li>No hay movimientos</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
