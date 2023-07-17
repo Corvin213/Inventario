@@ -1,10 +1,36 @@
 {% block content %}
   <h2>Gestión de Bodegas</h2>
-  <ul>
-    {% for bodega in bodegas %}
-      <li>{{ bodega.nombre }}</li>
-    {% empty %}
-      <li>No hay bodegas</li>
-    {% endfor %}
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Bodega</th>
+        <th>Productos</th>
+        <th>Stock</th>
+        <th>Jefe de Bodega</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bodega in bodegas %}
+      <tr>
+        <td>{{ bodega.nombre }}</td>
+        <td>
+          {% for producto in bodega.productos.all %}
+            {{ producto.nombre }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            No hay productos
+          {% endfor %}
+        </td>
+        <td>{{ bodega.stock }}</td>
+        <td>{{ bodega.jefe_bodega }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Crear Traspaso de Stock</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ movimiento_form.as_p }}
+    <button type="submit">Crear Traspaso</button>
+  </form>
 {% endblock %}

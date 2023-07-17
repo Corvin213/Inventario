@@ -1,18 +1,21 @@
 from django import forms
-from inventario.models import Producto, Bodega, Movimiento, DetalleMovimiento
+from inventario.models import Producto, Bodega, Movimiento, DetalleMovimiento, PerfilUsuario
 from django.contrib.auth.forms import UserCreationForm
-from inventario.models import PerfilUsuario
 
-class RegistroForm(forms.ModelForm):
-    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
-
+class RegistroForm(UserCreationForm):
     class Meta:
         model = PerfilUsuario
         fields = ('username', 'password1', 'password2', 'rol')
 
 
+class DetalleMovimientoForm(forms.ModelForm):
+    class Meta:
+        model = DetalleMovimiento
+        fields = '__all__'
+        
 class ProductoForm(forms.ModelForm):
+    bodega = forms.ModelChoiceField(queryset=Bodega.objects.all())
+
     class Meta:
         model = Producto
         fields = '__all__'

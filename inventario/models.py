@@ -25,7 +25,11 @@ class Producto(models.Model):
     # Agrega otros atributos relacionados con el producto según tus necesidades
 
 class Bodega(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
+    nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100, default='Valor predeterminado')
+
+    def __str__(self):
+        return self.nombre
 
 class Movimiento(models.Model):
     bodega_origen = models.ForeignKey(Bodega, on_delete=models.CASCADE, related_name='movimientos_salida')
@@ -38,3 +42,4 @@ class DetalleMovimiento(models.Model):
     movimiento = models.ForeignKey(Movimiento, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
+    

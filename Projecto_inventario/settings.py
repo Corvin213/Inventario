@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'inventario',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'inventario.backends.CustomBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

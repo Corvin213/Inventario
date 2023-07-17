@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from .models import Producto, Bodega, Movimiento, DetalleMovimiento
 from .forms.forms import ProductoForm, BodegaForm, MovimientoForm, RegistroForm
 
@@ -13,6 +14,17 @@ def register(request):
     else:
         form = RegistroForm()
     return render(request, 'register.html', {'form': form})
+
+@login_required
+def DetalleMovimiento(request):
+    if request.method == 'POST':
+        form = DetalleMovimientoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_movimientos')
+    else:
+        form = DetalleMovimientoForm()
+    return render(request, 'DetalleMovimiento.html', {'form': form})
 
 @login_required
 def crear_producto(request):
@@ -29,6 +41,18 @@ def crear_producto(request):
 def gestion_bodegas(request):
     bodegas = Bodega.objects.all()
     return render(request, 'gestion_bodegas.html', {'bodegas': bodegas})
+
+
+@login_required
+def crear_bodega(request):
+    if request.method == 'POST':
+        form = BodegaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('gestion_bodegas')
+    else:
+        form = BodegaForm()
+    return render(request, 'crear_bodega.html', {'form': form})
 
 @login_required
 def crear_movimiento(request):
@@ -48,3 +72,8 @@ def crear_movimiento(request):
 def lista_movimientos(request):
     movimientos = Movimiento.objects.all()
     return render(request, 'lista_movimientos.html', {'movimientos': movimientos})
+
+@login_required
+def lista_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'lista_productos.html', {'productos': productos})
