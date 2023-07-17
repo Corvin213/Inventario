@@ -1,10 +1,17 @@
 {% block content %}
-  <h2>Lista de Productos</h2>
-  <ul>
-    {% for producto in productos %}
-      <li>{{ producto.nombre }}</li>
-    {% empty %}
-      <li>No hay productos</li>
-    {% endfor %}
-  </ul>
+  <div class="lista-productos-container">
+    <h2 class="lista-productos-heading">Lista de Productos</h2>
+    <ul>
+      {% for producto in productos %}
+        <li>{{ producto.nombre }} - {{ producto.descripcion }} - Bodegas: 
+          {% for bodega in producto.bodegas.all %}
+            {{ bodega.nombre }},
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <style>
+    /* Estilos para lista_productos.html */
+  </style>
 {% endblock %}

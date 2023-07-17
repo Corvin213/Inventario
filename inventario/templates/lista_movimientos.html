@@ -1,10 +1,13 @@
 {% block content %}
-  <h2>Lista de Movimientos</h2>
-  <ul>
-    {% for movimiento in movimientos %}
-      <li>{{ movimiento.fecha }} - {{ movimiento.bodega_origen.nombre }} -> {{ movimiento.bodega_destino.nombre }}</li>
-    {% empty %}
-      <li>No hay movimientos</li>
-    {% endfor %}
-  </ul>
+  <div class="lista-movimientos-container">
+    <h2 class="lista-movimientos-heading">Lista de Movimientos</h2>
+    <ul>
+      {% for movimiento in movimientos %}
+        <li>{{ movimiento.fecha }} - {{ movimiento.usuario }} - Origen: {{ movimiento.bodega_origen }} - Destino: {{ movimiento.bodega_destino }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <style>
+    /* Estilos para lista_movimientos.html */
+  </style>
 {% endblock %}

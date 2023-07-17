@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, User, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class PerfilUsuario(AbstractUser):
     JEFEBODEGA = 'JF'
@@ -18,15 +18,22 @@ class PerfilUsuario(AbstractUser):
     
     groups = models.ManyToManyField(Group, related_name='perfil_usuarios')
     user_permissions = models.ManyToManyField(Permission, related_name='perfil_usuarios')
-    
-class Producto(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
-    # Agrega otros atributos relacionados con el producto según tus necesidades
 
 class Bodega(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=100, default='Valor predeterminado')
+    jefe_bodega = models.ForeignKey(PerfilUsuario, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre
+
+    def stock_producto(self, producto):
+        return self.productos.filter(id=producto.id).count()
+
+class Producto(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    bodegas = models.ManyToManyField(Bodega, related_name='productos')
 
     def __str__(self):
         return self.nombre
@@ -35,11 +42,10 @@ class Movimiento(models.Model):
     bodega_origen = models.ForeignKey(Bodega, on_delete=models.CASCADE, related_name='movimientos_salida')
     bodega_destino = models.ForeignKey(Bodega, on_delete=models.CASCADE, related_name='movimientos_entrada')
     productos = models.ManyToManyField(Producto, through='DetalleMovimiento')
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
 
 class DetalleMovimiento(models.Model):
-    movimiento = models.ForeignKey(Movimiento, on_delete=models.CASCADE)
+    movimiento = models.ForeignKey(Movimiento, on_delete=models.CASCADE, blank=True, null=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField()
-    
+    cantidad = models.PositiveIntegerField(default=0)

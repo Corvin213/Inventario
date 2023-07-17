@@ -13,6 +13,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', views.register, name='register'),
     path('lista_productos/', views.lista_productos, name='lista_productos'),
-    path('DetalleMovimiento/', views.DetalleMovimiento, name='DetalleMovimiento'),
+    path('crear_detalle_movimiento/', views.crear_detalle_movimiento, name='crear_detalle_movimiento'), # Agregar esta línea
     path('crear_bodega/', views.crear_bodega, name='crear_bodega'),
 ]

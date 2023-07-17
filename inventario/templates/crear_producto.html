@@ -1,23 +1,30 @@
 {% block content %}
-  <h2>Crear Producto</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    <div class="form-group">
-      <label for="{{ form.nombre.id_for_label }}">Nombre</label>
-      {{ form.nombre }}
+  <div class="crear-producto-container">
+    <div class="form-container">
+      <h2 class="crear-producto-heading">Crear Producto</h2>
+      <form method="post" class="crear-producto-form">
+        {% csrf_token %}
+        <div class="form-field">
+          <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+          {{ form.nombre }}
+        </div>
+        <div class="form-field">
+          <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
+          {{ form.descripcion }}
+        </div>
+        <div class="form-field">
+          <label for="{{ form.bodega.id_for_label }}">Bodega:</label>
+          {{ form.bodega }}
+        </div>
+        <div class="form-field">
+          <label for="id_cantidad">Cantidad:</label>
+          <input type="number" name="cantidad" id="id_cantidad" value="1" min="1">
+        </div>
+        <button type="submit" class="crear-producto-button">Guardar</button>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
-      {{ form.descripcion }}
-    </div>
-    <div class="form-group">
-      <label for="{{ form.bodega.id_for_label }}">Bodega</label>
-      {{ form.bodega }}
-    </div>
-    <button type="submit">Crear</button>
-  </form>
+  </div>
+  <style>
+    /* Estilos para crear_producto.html */
+  </style>
 {% endblock %}
-
-```Crear producto debe encontrarse en gestion bodega como opcion de menu, y debe tener un formulario que permita crear un producto, 
-el formulario debe tener los campos nombre, descripcion y bodega```

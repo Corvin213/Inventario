@@ -7,18 +7,17 @@ class RegistroForm(UserCreationForm):
         model = PerfilUsuario
         fields = ('username', 'password1', 'password2', 'rol')
 
-
 class DetalleMovimientoForm(forms.ModelForm):
     class Meta:
         model = DetalleMovimiento
         fields = '__all__'
-        
+
 class ProductoForm(forms.ModelForm):
     bodega = forms.ModelChoiceField(queryset=Bodega.objects.all())
 
     class Meta:
         model = Producto
-        fields = '__all__'
+        fields = ('nombre', 'descripcion', 'bodega')
 
 class BodegaForm(forms.ModelForm):
     class Meta:
