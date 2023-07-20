@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Producto, Bodega, Movimiento, DetalleMovimiento
 from .forms.forms import ProductoForm, BodegaForm, MovimientoForm, RegistroForm
+from .models import PerfilUsuario
+from django.shortcuts import render, get_object_or_404
 
 def register(request):
     if request.method == 'POST':
@@ -105,3 +107,11 @@ def lista_movimientos(request):
 def lista_productos(request):
     productos = Producto.objects.all()
     return render(request, 'lista_productos.html', {'productos': productos})
+
+@login_required
+def perfil_usuario(request):
+    # Obtener el perfil de usuario para el usuario autenticado o devolver un 404 si no existe
+    perfil_usuario = get_object_or_404(PerfilUsuario, pk=request.user.id)
+
+    # Pasar el perfil de usuario a la plantilla
+    return render(request, 'perfil_usuario.html', {'perfil_usuario': perfil_usuario})
