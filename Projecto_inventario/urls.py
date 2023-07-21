@@ -16,4 +16,7 @@ urlpatterns = [
     path('crear_detalle_movimiento/', views.crear_detalle_movimiento, name='crear_detalle_movimiento'), # Agregar esta línea
     path('crear_bodega/', views.crear_bodega, name='crear_bodega'),
     path('accounts/profile/', views.perfil_usuario, name='perfil_usuario'),
+    path('', views.homepage, name='homepage'),
+    
 ]
+

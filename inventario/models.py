@@ -34,9 +34,11 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     bodegas = models.ManyToManyField(Bodega, related_name='productos')
+    cantidad_producto = models.IntegerField(default=0)  # Agregamos el campo cantidad_producto como un entero con valor inicial 0
 
     def __str__(self):
         return self.nombre
+
 
 class Movimiento(models.Model):
     bodega_origen = models.ForeignKey(Bodega, on_delete=models.CASCADE, related_name='movimientos_salida')

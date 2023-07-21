@@ -35,19 +35,33 @@ def crear_producto(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST)
         if form.is_valid():
-            producto = form.save()
+            producto = form.save(commit=False)
 
             # Asignar la bodega seleccionada al producto
-            producto.bodegas.add(form.cleaned_data['bodega'])
+            bodega = form.cleaned_data['bodega']
+            producto.save()  # Guardamos el producto sin asignar la relación muchos a muchos
+
+            # Agregamos la bodega al producto y guardamos nuevamente
+            producto.bodegas.add(bodega)
+            producto.save()
+
+            # Obtenemos la cantidad ingresada en el formulario y la asignamos a cantidad_producto
+            cantidad = form.cleaned_data['cantidad']
+            producto.cantidad_producto = cantidad
+
+            # Guardamos el producto con la cantidad_producto actualizada
+            producto.save()
 
             # Crear el detalle de movimiento para agregar la cantidad de productos a la bodega
-            DetalleMovimiento.objects.create(movimiento=None, producto=producto, cantidad=1)
+            DetalleMovimiento.objects.create(movimiento=None, producto=producto, cantidad=cantidad)
 
             return redirect('gestion_bodegas')
     else:
         form = ProductoForm()
 
     return render(request, 'crear_producto.html', {'form': form, 'bodegas': bodegas})
+
+
 
 @login_required
 def gestion_bodegas(request):
@@ -115,3 +129,6 @@ def perfil_usuario(request):
 
     # Pasar el perfil de usuario a la plantilla
     return render(request, 'perfil_usuario.html', {'perfil_usuario': perfil_usuario})
+
+def homepage(request):
+    return render(request, 'homepage.html')

@@ -14,10 +14,12 @@ class DetalleMovimientoForm(forms.ModelForm):
 
 class ProductoForm(forms.ModelForm):
     bodega = forms.ModelChoiceField(queryset=Bodega.objects.all())
+    cantidad = forms.IntegerField(initial=0)  # Agrega el campo de cantidad
 
     class Meta:
         model = Producto
-        fields = ('nombre', 'descripcion', 'bodega')
+        fields = ('nombre', 'descripcion', 'bodega', 'cantidad')  # Incluye el campo de cantidad en los campos del formulario
+
 
 class BodegaForm(forms.ModelForm):
     class Meta:
