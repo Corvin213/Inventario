@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.core.validators import MinLengthValidator, MaxLengthValidator
+
 
 class PerfilUsuario(AbstractUser):
     JEFEBODEGA = 'JF'
@@ -31,13 +33,19 @@ class Bodega(models.Model):
         return self.productos.filter(id=producto.id).count()
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(
+        max_length=100,
+        validators=[
+            MinLengthValidator(1),
+            MaxLengthValidator(100),
+        ]
+    )
     descripcion = models.TextField()
     bodegas = models.ManyToManyField(Bodega, related_name='productos')
     cantidad_producto = models.IntegerField(default=0)  # Agregamos el campo cantidad_producto como un entero con valor inicial 0
 
     def __str__(self):
-        return self.nombre
+        return self.nombre.lower()
 
 
 class Movimiento(models.Model):

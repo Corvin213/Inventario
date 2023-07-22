@@ -40,26 +40,19 @@
       <div class="bodegas-list">
         <h2 class="gestion-bodegas-heading">Bodegas</h2>
         <ul>
-          {% for bodega in bodegas %}
-            <li>
-              {{ bodega.nombre }}
-              <a href="{% url 'lista_productos' %}?bodega_id={{ bodega.id }}">Ver Productos</a>
-            </li>
-            <ul>
-              {% for producto in bodega.productos.all %}
-                {% with detalle_movimiento=detalles_movimiento.bodega.producto %}
-                  {% if detalle_movimiento %}
-                    <li>{{ producto.nombre }} - Stock: {{ detalle_movimiento.cantidad_producto }}</li>
-                  {% else %}
-                    <li>{{ producto.nombre }} - Stock: 0</li>
-                  {% endif %}
-                {% endwith %}
-              {% endfor %}
-            </ul>
-          {% endfor %}
+            {% for bodega in bodegas %}
+                <li>
+                    {{ bodega.nombre|lower }}
+                    <a href="{% url 'lista_productos' %}?bodega_id={{ bodega.id }}">Ver Productos</a>
+                </li>
+                <ul>
+                    {% for producto in bodega.productos.all %}
+                        <li>{{ producto.nombre|lower }} - Stock: {{ producto.cantidad_producto }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
         </ul>
-      </div>
-
+    </div>    
       <div class="form-container">
         <h2 class="crear-movimiento-heading">Crear Movimiento</h2>
         <form method="post" class="crear-movimiento-form">
@@ -83,12 +76,13 @@
       <div class="crear-producto-link">
         <a href="{% url 'crear_producto' %}" class="crear-producto-button">Crear Producto</a>
       </div>
+      <div class="crear-bodega-link">
+        <a href="{% url 'crear_bodega' %}" class="crear-bodega-button">Crear Bodega</a>
+      </div>
+      <div class="logout-link">
+        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+      </div>
     </div>
   </div>
 </body>
 </html>
-
-
-
-
-

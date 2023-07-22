@@ -16,18 +16,6 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 @login_required
-def crear_detalle_movimiento(request):
-    if request.method == 'POST':
-        form = DetalleMovimientoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('gestion_bodegas')
-    else:
-        form = DetalleMovimientoForm()
-
-    return render(request, 'crear_detalle_movimiento.html', {'form': form})
-
-@login_required
 def crear_producto(request):
     # Obtener las bodegas existentes
     bodegas = Bodega.objects.all()
@@ -85,7 +73,11 @@ def gestion_bodegas(request):
         for producto in bodega.productos.all():
             detalles_movimiento[bodega][producto] = producto.detallemovimiento_set.filter(movimiento=None).first()
 
+        # Calcular la cantidad total de cada producto en la bodega
+        detalles_movimiento[bodega]['cantidad_total'] = sum(detalle.cantidad for detalle in detalles_movimiento[bodega].values() if isinstance(detalle, DetalleMovimiento))
+
     return render(request, 'gestion_bodegas.html', {'bodegas': bodegas, 'detalles_movimiento': detalles_movimiento, 'movimiento_form': movimiento_form})
+    
 
 @login_required
 def crear_bodega(request):
