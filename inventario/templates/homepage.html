@@ -1,6 +1,7 @@
 {% block content %}
   <div class="homepage-container">
-    <h2 class="homepage-heading">Gestion Bodegas</h2>
+    <h2 class="homepage-heading">Bienvenido a la Gestión de Bodegas</h2>
+    <p class="homepage-subheading">¡Administra tus bodegas de manera fácil y eficiente!</p>
     <div class="button-container">
       <a href="{% url 'register' %}" class="register-button">Registrarse</a>
       <a href="{% url 'login' %}" class="login-button">Iniciar sesión</a>
@@ -8,7 +9,7 @@
   </div>
   <style>
     body {
-      background-image: url('https://ferremakros.com/wp-content/uploads/2019/07/Bodegas-HD.jpg');
+      background-image: url('https://w.wallhaven.cc/full/48/wallhaven-489q72.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -17,13 +18,14 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Estilos para homepage.html */
     .homepage-container {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 400px; /* Ajusta el ancho del contenedor según tus necesidades */
       flex-direction: column;
-      background-color: #fff;
+      background-color: #F3E7D0; /* Color de fondo rústico */
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -32,9 +34,17 @@
     }
 
     .homepage-heading {
-      color: #000;
+      color: #613D2C; /* Color de encabezado rústico */
       font-size: 24px;
+      text-align: center; /* Centra el texto */
       margin-bottom: 20px;
+    }
+
+    .homepage-subheading {
+      color: #785F48; /* Color del subencabezado */
+      font-size: 16px;
+      text-align: center; /* Centra el texto */
+      margin-bottom: 30px;
     }
 
     .button-container {
@@ -45,8 +55,8 @@
 
     .register-button,
     .login-button {
-      background-color: #f00;
-      color: #fff;
+      background-color: #8B5740; /* Color de fondo del botón rústico */
+      color: #F3E7D0; /* Color del texto del botón */
       padding: 10px 20px;
       border: none;
       border-radius: 4px;
@@ -58,12 +68,12 @@
 
     .register-button:hover,
     .login-button:hover {
-      background-color: #ff5555;
+      background-color: #785F48; /* Color de fondo del botón al pasar el cursor */
     }
 
     .register-button:active,
     .login-button:active {
-      background-color: #cc0000;
+      background-color: #613D2C; /* Color de fondo del botón al hacer clic */
     }
   </style>
 {% endblock %}

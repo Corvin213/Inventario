@@ -1,19 +1,64 @@
 {% block content %}
+<style>
+  body {
+    background-image: url('https://w.wallhaven.cc/full/ym/wallhaven-ymg5kg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .lista-productos-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* Ajusta el ancho del contenedor */
+    margin: 0 auto; /* Centra el contenedor en la página */
+  }
+
+  .lista-productos-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .lista-productos-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .lista-productos-container li {
+    margin-bottom: 10px;
+  }
+
+  /* Estilo para los enlaces a las bodegas */
+  .bodega-link {
+    color: #0366d6;
+    text-decoration: underline;
+  }
+</style>
+
 <div class="lista-productos-container">
-  <h2 class="lista-productos-heading">Lista de Productos</h2>
-  <ul>
-    {% for producto in productos %}
-      <li>
-        {{ producto.nombre }} - {{ producto.descripcion }} - Bodegas: 
-        {% for bodega in producto.bodegas.all %}
-          {{ bodega.nombre }},
-        {% endfor %}
-        - Cantidad: {{ producto.cantidad_producto }}
-      </li>
-    {% endfor %}
-  </ul>
-</div>
-  <style>
-    /* Estilos para lista_productos.html */
-  </style>
+    <h2 class="lista-productos-heading">Lista de Productos</h2>
+    <ul>
+      {% for producto in productos %}
+        <li>
+          {{ producto.nombre|lower }} - {{ producto.descripcion }} - Bodegas: 
+          {% for bodega in producto.bodegas.all %}
+            {{ bodega.nombre }},
+          {% endfor %}
+          - Cantidad: {{ producto.cantidad_producto }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

@@ -4,34 +4,105 @@
   <title>Gestión de Bodegas</title>
   <style>
     body {
-      background-image: url('https://ferremakros.com/wp-content/uploads/2019/07/Bodegas-HD.jpg');
+      background-image: url('https://w.wallhaven.cc/full/ym/wallhaven-ymg5kg.jpg');
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
       margin: 0;
       padding: 0;
-    }
-
-    .container {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
 
-    .gestion-bodegas-container {
-      background-color: #fff;
-      padding: 20px;
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px; /* Ajusta el ancho del contenedor principal */
+      margin: 0 auto; /* Centra el contenedor en la página */
     }
 
+    .gestion-bodegas-container {
+      margin-top: 20px; /* Añade un margen superior para separar del formulario */
+    }
+
+    .gestion-bodegas-heading {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    /* Estilos para la lista de bodegas */
     .bodegas-list {
-      padding-right: 20px;
+      margin-top: 0;
     }
 
-    /* ... Otros estilos ... */
+    /* Estilos para el formulario de crear movimiento */
+    .crear-movimiento-heading {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .crear-movimiento-button {
+      background-color: #964B00;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .crear-movimiento-button:hover {
+      background-color: #6B3814;
+    }
+
+    .crear-movimiento-button:active {
+      background-color: #54350F;
+    }
+
+    /* Estilos para el enlace "Crear Producto", "Crear Bodega" y "Logout" */
+    .option-link {
+      margin-top: 20px; /* Aumenta el margen entre las opciones */
+    }
+
+    .option-link a {
+      display: block; /* Asegura que los enlaces ocupen toda la anchura */
+      width: 100%;
+      background-color: #964B00;
+      color: #fff;
+      padding: 12px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      margin-bottom: 10px; /* Añade un margen inferior a las opciones */
+    }
+
+    .option-link a:hover {
+      background-color: #6B3814;
+    }
+
+    .option-link a:active {
+      background-color: #54350F;
+    }
   </style>
 </head>
 <body>
@@ -40,19 +111,19 @@
       <div class="bodegas-list">
         <h2 class="gestion-bodegas-heading">Bodegas</h2>
         <ul>
-            {% for bodega in bodegas %}
-                <li>
-                    {{ bodega.nombre|lower }}
-                    <a href="{% url 'lista_productos' %}?bodega_id={{ bodega.id }}">Ver Productos</a>
-                </li>
-                <ul>
-                    {% for producto in bodega.productos.all %}
-                        <li>{{ producto.nombre|lower }} - Stock: {{ producto.cantidad_producto }}</li>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
+          {% for bodega in bodegas %}
+            <li>
+              {{ bodega.nombre|lower }}
+              <a href="{% url 'lista_productos' %}?bodega_id={{ bodega.id }}">Ver Productos</a>
+            </li>
+            <ul>
+              {% for producto in bodega.productos.all %}
+                <li>{{ producto.nombre|lower }} - Stock: {{ producto.cantidad_producto }}</li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
         </ul>
-    </div>    
+      </div>
       <div class="form-container">
         <h2 class="crear-movimiento-heading">Crear Movimiento</h2>
         <form method="post" class="crear-movimiento-form">
@@ -69,18 +140,14 @@
             <label for="{{ movimiento_form.productos.id_for_label }}">Productos:</label>
             {{ movimiento_form.productos }}
           </div>
-          <button type="submit" class="crear-movimiento-button">Guardar</button>
+          <button type="submit" class="crear-movimiento-button">Realizar</button>
         </form>
       </div>
-      <h2>Productos</h2>
-      <div class="crear-producto-link">
-        <a href="{% url 'crear_producto' %}" class="crear-producto-button">Crear Producto</a>
-      </div>
-      <div class="crear-bodega-link">
-        <a href="{% url 'crear_bodega' %}" class="crear-bodega-button">Crear Bodega</a>
-      </div>
-      <div class="logout-link">
-        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+      <!-- Contenedor para las opciones "Crear Producto", "Crear Bodega" y "Logout" -->
+      <div class="option-link">
+        <a href="{% url 'crear_producto' %}">Crear Producto</a>
+        <a href="{% url 'crear_bodega' %}">Crear Bodega</a>
+        <a href="{% url 'logout' %}">Logout</a>
       </div>
     </div>
   </div>
